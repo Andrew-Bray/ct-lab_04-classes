@@ -11,38 +11,37 @@ const linter = (myFunction) => {
     //isolate the (){}[] in the string - .filter
     const strippedArray = arrayedFunc
             .filter(item => verifiedItems.includes(item));
+
     return strippedArray;
 };
 
-const openers = ['[', '{', '('];
-const paired = ['[]', '{}', '()']
 
-const stack = new Stack();
+const runStack = (myFunction) => {
+    //console.log(myFunction);
+    const strippedArray = linter(myFunction);
+    console.log(strippedArray);
+    const openers = ['[', '{', '('];
+    const paired = ['[]', '{}', '()']
+    let isItAFunction = true
 
+    const stack = new Stack();
 
+    strippedArray.forEach(item => {
+        if (openers.includes(item)) {
+            stack.push(item);
 
-strippedArray.forEach(item => {
-    if (isOpeningBracket(item)) {
-        stack.push(item);
-    } else stack.push(item);
-});
+        } else if (paired.includes(stack.peek() + item)) {
+            stack.pop();
+        }   else isItAFunction = false;
+    });
 
-    // includes push, pop, and peek through some if thens
-        // if the next item is a match with the last one (peek)
+    console.log("hi", stack.peek());
+    if (stack.peek()) {isItAFunction = false};
+    
+    console.log(isItAFunction);
+    return isItAFunction;
+};
 
-        // if (stringifiedFunc[i] === newStack.peek()) {
-        //     newStack.pop()
-        // } else {
-        //     newStack.push(stringifiedFunc[i])
-        // }
+runStack('dfgd[][[[[[[(');
 
-        // (pop) the last one 
-
-        // else (push) the next item
-
-    //in the end the #stack should end up empty, if it does return true, otherwise return false
-
-
-linter('dfkj{{{}}}{}{}{}{))(())[[][dhfgkjdf');
-
-module.exports = linter;
+module.exports = { runStack };

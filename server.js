@@ -1,18 +1,22 @@
 const express = require('express');
 const app = express();
-const Stack = require('./Stack.js');
-const linter = require('./linter.js');
+//const Stack = require('./Stack.js');
+const { runStack } = require('./Linter.js');
 
 app.use(express.json());
 
+const PORT = 7890;
+
 //endpoints
 app.post('/', (req, res) => {
-    const stack = new Stack(req.body.code);
-    const isItAFunction = linter(stack);
-    res.send(isItAFunction);
+    const myFunction = `${req.body.code}`;
+    console.log(myFunction);
+
+    const isItAFunction = runStack(myFunction);
+    res.send({"isItAFunction": isItAFunction});
 })
 
 //listen
-app.listen(7890, () => {
-    console.log('started on 7890')
+app.listen(PORT, () => {
+    console.log(`started on ${PORT}`)
 });
