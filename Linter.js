@@ -32,16 +32,20 @@ const runStack = (myFunction) => {
 
         } else if (paired.includes(stack.peek() + item)) {
             stack.pop();
-        }   else isItAFunction = false;
+        }   else {isItAFunction = false; 
+            isItAFunction = `${isItAFunction}. Error: unexpected closing bracket `;
+        }
     });
 
-    console.log("hi", stack.peek());
-    if (stack.peek()) {isItAFunction = false};
-    
+    if (stack.peek()) {isItAFunction = false; 
+        isItAFunction = `${isItAFunction}. Error: unexpected "${stack.peek()}" `;
+    };
     console.log(isItAFunction);
     return isItAFunction;
 };
 
-runStack('dfgd[][[[[[[(');
+runStack(`pop()(9( {
+    this.#stack.pop();
+} `);
 
 module.exports = { runStack };
